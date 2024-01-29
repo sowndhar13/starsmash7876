@@ -13,11 +13,26 @@ $(document).ready(function () {
         var dataContainer = $('#data-container');
         dataContainer.empty(); // Clear previous data
 
-        // Iterate through the data and display it
+        // Create a table
+        var table = $('<table>');
+        var headerRow = $('<tr>');
+        // Assuming the first row contains headers
+        for (var key in data[0]) {
+            headerRow.append($('<th>').text(key));
+        }
+        table.append(headerRow);
+
+        // Iterate through the data and add rows to the table
         for (var i = 0; i < data.length; i++) {
             var row = data[i];
-            var rowHtml = '<p>' + JSON.stringify(row) + '</p>';
-            dataContainer.append(rowHtml);
+            var tableRow = $('<tr>');
+            for (var key in row) {
+                tableRow.append($('<td>').text(row[key]));
+            }
+            table.append(tableRow);
         }
+
+        // Append the table to the data container
+        dataContainer.append(table);
     }
 });
