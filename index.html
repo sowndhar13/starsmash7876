@@ -16,7 +16,36 @@
     </style>
 </head>
 <body>
-    <h1>Welcome to My SOWNDHAR Website!</h1>
+    <h1>Welcome to My GitHub Website!</h1>
     <p>This is a simple example website hosted on GitHub.</p>
+
+    <!-- Add a form to collect data -->
+    <form id="dataForm">
+        <label for="dataInput">Enter Data:</label>
+        <input type="text" id="dataInput" name="dataInput">
+        <button type="button" onclick="sendData()">Send Data</button>
+    </form>
+
+    <script>
+        function sendData() {
+            const inputData = document.getElementById('dataInput').value;
+
+            // Use the Fetch API to send data to a server or process it as needed
+            fetch('https://your-website.com/your-endpoint', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ data: inputData }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Data sent successfully:', data);
+            })
+            .catch(error => {
+                console.error('Error sending data:', error);
+            });
+        }
+    </script>
 </body>
 </html>
