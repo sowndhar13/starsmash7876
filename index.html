@@ -1,0 +1,40 @@
+# app.py
+from flask import Flask, render_template, request, redirect, url_for
+import pandas as pd
+
+app = Flask(__name__)
+
+# Placeholder for the data (replace with your logic to store data permanently)
+stored_data = []
+
+@app.route('/')
+def index():
+    return render_template('index.html', data=stored_data)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    if 'file' not in request.files:
+        return redirect(url_for('index'))
+
+    file = request.files['file']
+
+    if file.filename == '':
+        return redirect(url_for('index'))
+
+    if file:
+        # Read the Excel file
+        df = pd.read_excel(file)
+        
+        # Extract data from the DataFrame (modify based on your Excel structure)
+        for index, row in df.iterrows():
+            data_entry = {
+                'column1': row['Column1'],
+                'column2': row['Column2'],
+                # Add more columns as needed
+            }
+            stored_data.append(data_entry)
+
+    return redirect(url_for('index'))
+
+if __name__ == '__main__':
+    app.run(debug=True)
